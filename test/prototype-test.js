@@ -161,7 +161,7 @@ describe("PROTOTYPES", () => {
     }), it("allToppings", () => {
       const e = cakePrompts.allToppings();
       expect(e).to.deep.equal(["dutch process cocoa", "toasted sugar", "smoked sea salt", "berries", "edible flowers", "mint", "cranberry", "crystallized ginger"])
-    }), it.only("groceryList", () => {
+    }), it("groceryList", () => {
       const e = cakePrompts.groceryList();
       expect(e).to.deep.equal({
         "dutch process cocoa": 1,
@@ -386,7 +386,7 @@ describe("PROTOTYPES", () => {
         name: "Will",
         studentCount: 20
       }])
-    }), it("studentsPerInstructor", () => {
+    }), it.only("studentsPerInstructor", () => {
       const e = turingPrompts.studentsPerInstructor();
       expect(e).to.deep.equal({
         cohort1806: 15,

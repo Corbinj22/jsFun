@@ -521,8 +521,11 @@ const nationalParksPrompts = {
 
 
     const result = nationalParks.map(park => {
-      console.log(park);
+      let newPark = {[park.location] : park.name}
+      return newPark
     })
+
+    return result;
 
     // Annotation:
     // Write your annotation here as a comment
@@ -543,8 +546,19 @@ const nationalParksPrompts = {
     //   'canyoneering',
     //   'backpacking',
     //   'rock climbing' ]
+    let activities = () => {
+      return nationalParks.map(park => {
+        return park.activities
+      }).flat()
+    }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+
+    const result = activities().reduce((acc, activity) => {
+      if (!acc.includes(activity)) {
+        acc.push(activity);
+      }
+      return acc
+    }, [])
     return result;
 
     // Annotation:
@@ -571,7 +585,10 @@ const breweryPrompts = {
     // Return the total beer count of all beers for every brewery e.g.
     // 40
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = breweries.reduce((acc, brewery) => {
+      acc += brewery.beers.length;
+      return acc;
+    }, 0);
     return result;
 
     // Annotation:
@@ -587,7 +604,12 @@ const breweryPrompts = {
     // ...etc.
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = breweries.reduce((acc, brewery) => {
+      let obj = {name : brewery.name,
+                 beerCount : brewery.beers.length}
+      acc.push(obj)
+      return acc;
+    }, []);
     return result;
 
     // Annotation:
@@ -598,8 +620,11 @@ const breweryPrompts = {
     // Return the beer which has the highest ABV of all beers
     // e.g.
     // { name: 'Barrel Aged Nature\'s Sweater', type: 'Barley Wine', abv: 10.9, ibu: 40 }
+    let allBeers = () => {
+      return breweries.map(brewery => brewery.beers).flat();
+    }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = allBeers().sort((a, b) =>  b.abv - a.abv)[0];
     return result;
 
     // Annotation:
@@ -647,7 +672,13 @@ const turingPrompts = {
     //  { name: 'Robbie', studentCount: 18 }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = instructors.reduce((acc, instructor) => {
+      const cohortDetails = {name : instructor.name, studentCount: null};
+       const matchhedInstructor = cohorts.find(cohort => cohort.module === instructor.module)
+       cohortDetails.studentCount = matchhedInstructor.studentCount;
+      acc.push(cohortDetails)
+      return acc;
+    }, [])
     return result;
 
     // Annotation:
@@ -661,7 +692,15 @@ const turingPrompts = {
     // cohort1804: 10.5
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+
+
+    const result = cohorts.reduce((acc, cohort) => {
+      const key = `cohort${cohort.cohort}`
+      const moduleInstructors = instructors.filter(instructor => instructor.module === cohort.module)
+      acc[key] = (cohort.studentCount / moduleInstructors.length);
+      console.log;
+      return acc;
+    }, {})
     return result;
 
     // Annotation:
@@ -897,7 +936,22 @@ const dinosaurPrompts = {
     //   'Jurassic World: Fallen Kingdom': 18
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    var dinoKeys = Object.keys(dinosaurs)
+    let awesomeDinos = dinoKeys.filter(key => {
+    return  dinosaurs[key].isAwesome === true;
+    });
+
+    var test = movies.reduce((acc, movie) => {
+      let counter = 0;
+      movie.dinos.forEach(dino => {
+        if (awesomeDinos.includes(dino)) {
+          counter++
+        }
+      })
+      acc[movie.title] = counter
+      return acc
+    }, {})
+    const result = test;
     return result;
 
     // Annotation:
